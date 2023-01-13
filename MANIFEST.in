@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include signage_display *.css
+recursive-include signage_display *.csv
+recursive-include signage_display *.html
+recursive-include signage_display *.ico
+recursive-include signage_display *.js
+recursive-include signage_display *.json
+recursive-include signage_display *.md
+recursive-include signage_display *.png
+recursive-include signage_display *.py
+recursive-include signage_display *.svg
+recursive-include signage_display *.txt
+recursive-exclude signage_display *.pyc
