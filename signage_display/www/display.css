@@ -1,0 +1,15 @@
+.container-fluid {
+    overflow: hidden;
+    width: 100vh;
+    height: 100vh;
+}
+
+.swiper{
+    margin-top: 10vh;
+    height: 80vh;
+}
+
+.card {
+    overflow: hidden;
+}
+

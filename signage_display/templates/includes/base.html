@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <title>
+            {% block title %}{% endblock %}
+        </title>
+        {% block styles %}{% endblock %}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <link rel="stylesheet" href="/assets/signage_display/css/swiper-bundle.min.css"/>  
+
+        <script src="/assets/signage_display/js/swiper-bundle.min.js"></script>
+        <script>
+            window.frappe = {};
+            frappe.ready_events = [];
+            frappe.ready = function(fn) {
+                frappe.ready_events.push(fn);
+            }
+            window.dev_server = {{ dev_server }};
+            window.socketio_port = {{ (frappe.socketio_port or 'null') }};
+            window.show_language_picker = {{ show_language_picker or 'false' }};
+        </script>
+    </head>
+    <body frappe-session-status="{{ 'logged-in' if frappe.session.user != 'Guest' else 'logged-out'}}" data-path="{{ path | e }}" >
+        {% block body%}{% endblock %}
+
+        {% block base_scripts %}
+        <script>
+            frappe.boot = {{ boot }}
+            // for backward compatibility of some libs
+            frappe.sys_defaults = frappe.boot.sysdefaults;
+        </script>
+        {{ include_script('frappe-web.bundle.js') }}
+	    {% endblock %}
+
+        {%- block script %}
+            {% if colocated_js -%}
+                <script>{{ colocated_js }}</script>
+            {%- endif %}
+	    {%- endblock %}
+
+        {%- block body_include %}{{ body_include or "" }}{% endblock -%}
+
+    </body>
+</html> 

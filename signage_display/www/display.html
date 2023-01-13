@@ -1,0 +1,44 @@
+{% extends "templates/includes/base.html" %}
+
+{% block title %}{{ signage_settings.display_name }}{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="./display.css" />
+{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid p-0">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-8">
+            <div class="swiper">
+                <div class="swiper-wrapper" style="height: {{ signage_height }}vh !important;">
+                    {% for signage in signages %}
+                    <div class="swiper-slide" data-swiper-autoplay="{{ signage_settings.display_duration }}">
+                        <div class="card" style="height: {{ signage_height - 4 }}vh !important;">
+                            {% if signage.display_image %}
+                            <img src="{{ signage.display_image }}" class="card-img" />
+                            <div class="card-img-overlay p-5">
+                            {% else %}
+                            <div class="card-body p-5">
+                            {% endif %}
+                                {% if signage.show_title %}
+                                <h1 class="card-title">{{ signage.title }}</h1>
+                                {% endif %}
+                                {% if signage.description %}
+                                <p class="card-text">{{ signage.description }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <!-- <div class="swiper-pagination"></div> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>frappe.csrf_token = "{{ frappe.session.csrf_token }}"</script>
+
+{% endblock %}
