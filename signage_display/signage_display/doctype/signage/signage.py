@@ -5,7 +5,15 @@ import frappe
 from frappe.model.document import Document
 
 class Signage(Document):
-	pass
+	def on_update(self):
+		if self.published:
+			signages = get_all_signages()
+			frappe.publish_realtime("signage_update", {"signages": signages})
+
+	def after_delete(self):
+		if self.published:
+			signages = get_all_signages()
+			frappe.publish_realtime("signage_update", {"signages": signages})
 
 @frappe.whitelist()
 def get_all_signages():
@@ -13,7 +21,7 @@ def get_all_signages():
 		filters={
 			"published": "1"
 		},
-		fields=["title", "description", "display_image"]
+		fields=["title", "description", "display_image", "show_title"]
 	)
 
 	return signages

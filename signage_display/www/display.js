@@ -1,87 +1,77 @@
-frappe.call({
-    method: 'signage_display.signage_display.doctype.signage_settings.signage_settings.get_signage_settings',
-    callback: (res) => {
-      settings = res.message
-      initializeSwiper(settings);
-    }
-  })
-  
-  function initializeSwiper(settings) {
+let settings;
+let swiper;
+let signages;
 
-    // const swiperWrapper = document.querySelector(".swiper-wrapper");
-    // const signageHeight = Math.ceil(80 / settings.row_count);
-    // swiperWrapper.style.height = `${signageHeight}vh !important`;
-  
-    const swiper = new Swiper('.swiper', {
-      speed: 2000,
-      direction: 'horizontal',
-      autoPlay: {
-        delay: settings.display_duration,
-        disableOnInteraction: false,
-      },
-      slidesPerView: settings.column_count,
-      grid: {
-        rows: settings.row_count,
-        fill: 'row'
-      },
-      spaceBetween: 20,
-      pagination: {
-        el: '.swiper-pagination',
-      },
-    });
-    
-    swiper.autoplay.start();
-  
-    swiper.on("autoplayPause", () => {
-      swiper.autoplay.run();
-    })
-  
-    swiper.on("autoplayStop", () => {
-      swiper.autoplay.start();
-    })
+getSignageSettings();
+window.onload = registerSocketListener;
+
+async function getSignageSettings() {
+  try {
+    const res = await frappe.call('signage_display.signage_display.doctype.signage_settings.signage_settings.get_signage_settings');
+    settings = res.message
+    initializeSwiper();
+  } catch (err) {
+    console.log(err);
   }
+}
   
+function initializeSwiper() {
   
-  // let signages;
+  swiper = new Swiper('.swiper', {
+    speed: 2000,
+    direction: 'horizontal',
+    autoPlay: {
+      delay: settings.display_duration,
+      disableOnInteraction: false,
+    },
+    slidesPerView: settings.column_count,
+    grid: {
+      rows: settings.row_count,
+      fill: 'row'
+    },
+    spaceBetween: 20,
+    pagination: {
+      el: '.swiper-pagination',
+    },
+  });
   
-  // setInterval(() => {
-  //   frappe.call({
-  //     method: 'signage_display.signage_display.doctype.signage.signage.get_all_signages',
-  //     callback: (res) => {
-  //       signages = res.message;
-  //       console.log(signages)
-        
-  //       let loadedCount = 0;
-  //       signages.forEach(signage => {
-  //         let img = new Image();
-  //         img.onload = () => {
-  //           console.log(loadedCount);
-  //           loadedCount++;
-  //           if (loadedCount === signages.length) {
-  //             swiper.removeAllSlides();
-  //             for (let i = 0; i < signages.length; i++) {  
-  //               swiper.appendSlide(`
-  //                 <div class="swiper-slide" data-swiper-autoplay="20000">
-  //                   <div class="card">
-  //                       <div class="text-center">
-  //                           ${signages[i].img.outerHTML}
-  //                       </div>
-  //                       <div class="card-body">
-  //                           <article>${signages[i].title}</article>
-  //                       </div>
-  //                   </div>
-  //                 </div>
-  //               `)
-  //             }
-  //             swiper.update()
-  //           }
-  //         }
-  //         img.src = signage.display_image;
-  //         img.className = "card-img-top";
-  //         signage.img = img;
-  //       })
-  //     }
-  //   })
-  // }, 40000);
+  swiper.autoplay.start();
   
-  
+  swiper.on("autoplayStop", () => {
+    swiper.autoplay.start();
+  });
+} 
+
+function updateSignageDisplay() {
+
+  const signageHeight = Math.ceil(80 / settings.row_count);
+  swiper.removeAllSlides();
+  for (let i = 0; i < signages.length; i++) { 
+    console.log(i) 
+    swiper.appendSlide(createSlide(signages[i], signageHeight));
+  }
+  swiper.update();
+}
+
+function createSlide(signage, height) {
+  return `
+    <div class="swiper-slide" data-swiper-autoplay="${settings.display_duration}">
+      <div class="card" style="height: ${height - 4}vh !important">
+        ${signage.display_image ? 
+          `<img src="${signage.display_image}" class="card-img" />
+           <div class="card-img-overlay p-5">` : 
+          `<div class="card-body p-5">`
+        } 
+          ${signage.show_title ? `<h1 class="card-title">${signage.title}</h1>` : ``}
+          ${signage.description ? `<p class="card-text">${signage.description}</p>` : ``}
+        </div>
+      </div>
+    </div>`
+}
+
+function registerSocketListener() {
+  frappe.realtime.on("signage_update", (data) => {
+    signages = data.signages;
+    updateSignageDisplay();
+  });
+}
