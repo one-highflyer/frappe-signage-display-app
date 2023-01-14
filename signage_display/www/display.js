@@ -45,15 +45,17 @@ function initializeSwiper() {
 function updateSignageDisplay() {
 
   const signageHeight = Math.ceil(80 / settings.row_count);
+
+  //Remove old slides and add newly fetched signages
   swiper.removeAllSlides();
   for (let i = 0; i < signages.length; i++) { 
-    console.log(i) 
     swiper.appendSlide(createSlide(signages[i], signageHeight));
   }
   swiper.update();
 }
 
 function createSlide(signage, height) {
+
   return `
     <div class="swiper-slide" data-swiper-autoplay="${settings.display_duration}">
       <div class="card" style="height: ${height - 4}vh !important">
@@ -70,6 +72,7 @@ function createSlide(signage, height) {
 }
 
 function registerSocketListener() {
+  
   frappe.realtime.on("signage_update", (data) => {
     signages = data.signages;
     updateSignageDisplay();
