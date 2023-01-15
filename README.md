@@ -19,9 +19,9 @@ It also comes with customization options for adjusting the layout and speed of t
 
 ##### Install on Frappe Cloud
 
-1. Go to [Frappe Cloud Dashboard- Sites](https://frappecloud.com/dashboard/sites) and create new site. 
+1. Go to [Frappe Cloud Dashboard- Sites](https://frappecloud.com/dashboard/sites) and create a new site. 
 2. Select "Select apps to install" and choose "Signage Display"
-3. Complete the site setup with the help of new site wizard. 
+3. Complete the site setup with the help of the new site wizard. 
 
 ##### Install Locally
 1. [Set up Frappe Bench](https://frappeframework.com/docs/v14/user/en/installation)
@@ -35,15 +35,15 @@ bench --site signage.localhost install-app signage_display
 bench start
 ```
 
-4. Complete the site intialization by visiting the site URL.
+4. Complete the site initialization by visiting the site URL.
 
 ### Usage 
 
 ##### Creating and viewing signages 
 
-1. Search for 'Signage List' of corresponsing to the 'Signage' doctype on your site
+1. Search for 'Signage List' of corresponding to the 'Signage' doctype on your site
 2. Choose 'Add Signage' option.
-3. Design the new signage by providing appropriate title (mandatory), description, and display image. 
+3. Design the new signage by providing a appropriate title (mandatory), description, and display image. 
 
 ![New Signage page](https://user-images.githubusercontent.com/42403668/212526452-294b9430-80e8-4fc9-873e-b713211631df.png)
 
@@ -53,7 +53,7 @@ bench start
 
 ##### Customizing the display board
 
-Signage Display provides few customization options to help you determine the final look of the display board. This includes:
+Signage Display provides several customization options to help you determine the final look of the display board. This includes:
 * Display Name 
 * Individual Signage Display Duration (default - 20000 ms)
 * Display Row Count : How many signages should the display board show in a column at a given time (default - 1)
