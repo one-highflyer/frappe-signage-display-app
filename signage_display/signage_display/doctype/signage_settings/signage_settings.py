@@ -14,5 +14,6 @@ def get_signage_settings():
 		"display_duration": settings.display_duration,
 		"display_name": settings.display_name,
 		"column_count": settings.column_count,
-		"row_count": settings.row_count}
+		"row_count": settings.row_count
+		}
 	return response

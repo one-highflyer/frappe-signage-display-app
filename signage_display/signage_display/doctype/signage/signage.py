@@ -8,12 +8,14 @@ class Signage(Document):
 	def on_update(self):
 		if self.published:
 			signages = get_all_signages()
-			frappe.publish_realtime("signage_update", {"signages": signages})
+			frappe.publish_realtime("signage_update", {"signages": signages}, user="Guest")
+			# frappe.publish_realtime("signage_update", {"signages": signages}, user="System")
 
 	def after_delete(self):
 		if self.published:
 			signages = get_all_signages()
-			frappe.publish_realtime("signage_update", {"signages": signages})
+			frappe.publish_realtime("signage_update", {"signages": signages}, user="Guest")
+			# frappe.publish_realtime("signage_update", {"signages": signages}, user="System")
 
 @frappe.whitelist(allow_guest=True)
 def get_all_signages():
