@@ -40,7 +40,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2023-01-13 09:18:33.378636",
+ "modified": "2023-01-15 07:20:42.459698",
  "modified_by": "Administrator",
  "module": "Signage Display",
  "name": "Signage Settings",
@@ -55,6 +55,13 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Guest",
+   "share": 1
   }
  ],
  "sort_field": "modified",

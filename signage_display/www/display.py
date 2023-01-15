@@ -8,5 +8,5 @@ def get_context(context):
         },
         fields=["title", "description", "display_image", "show_title"]
     )
-    context.signage_height = 80 / context.signage_settings.row_count
+    context.signage_height = 80 // context.signage_settings.row_count
     return context

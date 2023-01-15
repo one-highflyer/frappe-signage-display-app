@@ -7,7 +7,7 @@ from frappe.model.document import Document
 class SignageSettings(Document):
 	pass
 
-@frappe.whitelist()
+@frappe.whitelist(allow_guest=True)
 def get_signage_settings():
 	settings = frappe.get_doc("Signage Settings")
 	response = {

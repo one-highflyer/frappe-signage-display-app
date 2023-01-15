@@ -44,7 +44,7 @@ function initializeSwiper() {
 
 function updateSignageDisplay() {
 
-  const signageHeight = Math.ceil(80 / settings.row_count);
+  const signageHeight = Math.floor(80 / settings.row_count);
 
   //Remove old slides and add newly fetched signages
   swiper.removeAllSlides();

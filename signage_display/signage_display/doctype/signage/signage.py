@@ -15,7 +15,7 @@ class Signage(Document):
 			signages = get_all_signages()
 			frappe.publish_realtime("signage_update", {"signages": signages})
 
-@frappe.whitelist()
+@frappe.whitelist(allow_guest=True)
 def get_all_signages():
 	signages = frappe.db.get_list("Signage", 
 		filters={
