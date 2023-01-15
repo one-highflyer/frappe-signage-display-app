@@ -9,9 +9,9 @@ from signage_display import __version__ as version
 setup(
 	name="signage_display",
 	version=version,
-	description="Display Signages Boards",
-	author="Anjaleeps",
-	author_email="anjaleeps97@gmail.com",
+	description="A Frappe app for creating digital signage display boards",
+	author="Highflyer Global Innovations",
+	author_email="hello@hfgi.co.uk",
 	packages=find_packages(),
 	zip_safe=False,
 	include_package_data=True,
