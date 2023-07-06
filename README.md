@@ -30,7 +30,7 @@ It also comes with customization options for adjusting the layout and speed of t
 
 ```
 bench new-site signage.localhost
-bench get-app signage_display
+bench get-app signage_display https://github.com/one-highflyer/frappe-signage-display-app
 bench --site signage.localhost install-app signage_display
 bench start
 ```
